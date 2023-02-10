@@ -1,0 +1,18 @@
+prj:
+  name: back-normal
+  version: v0.0.1
+
+port: 80
+
+log.root: /web/logs
+
+mysql:
+  user: user
+  password: password
+  address: localhost:3306
+  db: testdb
+  conns:
+    maxOpen: 40
+    maxIdle: 2
+    timeout: 500ms
+    readTimeout: 3s
