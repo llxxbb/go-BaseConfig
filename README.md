@@ -30,7 +30,7 @@ gin.release: true
 
 - **搜索路径**：配置文件的搜索路径为当前项目执行目录。
 
-- **缺省配置文件**：放于 config_default.yml 文件中
+- **缺省配置文件**：放于 config_default.yml 文件中，嵌入的请设置 config.FDefault 变量
 
 - **env 环境变量**： env 的缺省值为 product，用于确定要加载的配置文件如，如果 env = dev 则加载 config_dev.yml
 
@@ -62,34 +62,32 @@ func TestConfig_default(t *testing.T) {
 ```go
 // 定义自己的配置，增加 Mysql 的配置
 type MyConfig struct {
-	BaseConfig
-	Mysql   mysql.Config
-	MaxOpen int
-	MaxIdle int
+    BaseConfig
+    Mysql   mysql.Config
+    MaxOpen int
+    MaxIdle int
 }
 
 // 实现 ConfigI 接口，用于配置文件和结构体字段的映射
 func (c *MyConfig) AppendFieldMap(fMap map[string]string) {
-	fMap["mysql.user"] = "Mysql.User"
-	fMap["mysql.password"] = "Mysql.Passwd"
-	fMap["mysql.address"] = "Mysql.Addr"
-	fMap["mysql.db"] = "Mysql.DBName"
-	fMap["mysql.conns.timeout"] = "Mysql.Timeout"
-	fMap["mysql.conns.readTimeout"] = "Mysql.ReadTimeout"
-	fMap["mysql.conns.maxOpen"] = "MaxOpen"
-	fMap["mysql.conns.maxIdle"] = "MaxIdle"
+    fMap["mysql.user"] = "Mysql.User"
+    fMap["mysql.password"] = "Mysql.Passwd"
+    fMap["mysql.address"] = "Mysql.Addr"
+    fMap["mysql.db"] = "Mysql.DBName"
+    fMap["mysql.conns.timeout"] = "Mysql.Timeout"
+    fMap["mysql.conns.readTimeout"] = "Mysql.ReadTimeout"
+    fMap["mysql.conns.maxOpen"] = "MaxOpen"
+    fMap["mysql.conns.maxIdle"] = "MaxIdle"
 }
 
 func TestCustomConfig(t *testing.T) {
-	c := MyConfig{}
-	FillConfig(&c, &c.BaseConfig)
-	assert.Equal(t, "user", c.Mysql.User)
-	assert.Equal(t, "password", c.Mysql.Passwd)
-	assert.Equal(t, "localhost:3306", c.Mysql.Addr)
-	assert.Equal(t, "testdb", c.Mysql.DBName)
-	assert.Equal(t, 40, c.MaxOpen)
-	assert.Equal(t, 2, c.MaxIdle)
+    c := MyConfig{}
+    FillConfig(&c, &c.BaseConfig)
+    assert.Equal(t, "user", c.Mysql.User)
+    assert.Equal(t, "password", c.Mysql.Passwd)
+    assert.Equal(t, "localhost:3306", c.Mysql.Addr)
+    assert.Equal(t, "testdb", c.Mysql.DBName)
+    assert.Equal(t, 40, c.MaxOpen)
+    assert.Equal(t, 2, c.MaxIdle)
 }
 ```
-
-

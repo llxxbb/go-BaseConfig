@@ -8,6 +8,7 @@
 package config
 
 import (
+	"bytes"
 	"fmt"
 	"net"
 	"os"
@@ -44,6 +45,8 @@ const (
 	VAL_PRODUCT = "product"
 )
 
+var FDefault []byte
+
 // 用于反射，将配置文件中的配置项映射到 `Config` 对象的属性上
 var fieldMap = map[string]string{
 	"prj.name":    "ProjectName",
@@ -68,10 +71,10 @@ func FillConfig(cus ConfigI, base *BaseConfig) {
 	base.Env = viper.GetString(KEY_ENV)
 
 	// 读取缺省配置文件
-	mergeFile(cus, _fileName+_nameSplitter+_fileDefault)
+	mergeFile(cus, _fileDefault)
 
 	// 读取 profile 对应的配置文件
-	mergeFile(cus, _fileName+_nameSplitter+base.Env)
+	mergeFile(cus, base.Env)
 
 	// 读取环境变量
 	mergeFile(cus, "")
@@ -94,15 +97,25 @@ func (c *BaseConfig) setWdAndLogPath() {
 
 // 读取并合并配置项
 // `path` 为 "" 则从环境变量中读取
-func mergeFile(c ConfigI, path string) {
-	if path != "" {
+func mergeFile(c ConfigI, profile string) {
+	if profile != "" {
+		path := _fileName + _nameSplitter + profile
 		viper.SetConfigName(path)      // name of config file (without extension)
 		viper.SetConfigType(_fileType) // REQUIRED if the config file does not have the extension in the name
 		viper.AddConfigPath(".")       // look for config in the working directory
 		viper.AddConfigPath("../cmd")  // used for unit test
 		err := viper.ReadInConfig()    // Find and read the config file
 		if err != nil {                // Handle errors reading the config file
-			panic(fmt.Errorf("fatal error: read config file: %s, %w", path, err))
+			if profile == _fileDefault {
+				if viper.ReadConfig(bytes.NewReader(FDefault)) != nil {
+					panic(fmt.Errorf("load config_default.yml from embed: %w", err))
+				}
+				fmt.Printf("%s loaded from embed\n", path)
+			} else {
+				panic(fmt.Errorf("fatal error: read config file: %s, %w", path, err))
+			}
+		} else {
+			fmt.Printf("%s loaded\n", path)
 		}
 	}
 
