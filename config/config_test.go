@@ -33,9 +33,12 @@ func TestFindField(t *testing.T) {
 // 定义自己的配置
 type MyConfig struct {
 	BaseConfig
-	Mysql   mysql.Config
-	MaxOpen int
-	MaxIdle int
+	Mysql       mysql.Config
+	MaxOpen     int
+	MaxIdle     int
+	TypeInt     int
+	TypeFloat32 float32
+	TypeFloat64 float64
 }
 
 // 实现 ConfigI 接口
@@ -48,6 +51,9 @@ func (c *MyConfig) AppendFieldMap(fMap map[string]string) {
 	fMap["mysql.conns.readTimeout"] = "Mysql.ReadTimeout"
 	fMap["mysql.conns.maxOpen"] = "MaxOpen"
 	fMap["mysql.conns.maxIdle"] = "MaxIdle"
+	fMap["type.int"] = "TypeInt"
+	fMap["type.float32"] = "TypeFloat32"
+	fMap["type.float64"] = "TypeFloat64"
 }
 
 func TestCustomConfig(t *testing.T) {
@@ -59,4 +65,7 @@ func TestCustomConfig(t *testing.T) {
 	assert.Equal(t, "testdb", c.Mysql.DBName)
 	assert.Equal(t, 40, c.MaxOpen)
 	assert.Equal(t, 2, c.MaxIdle)
+	assert.Equal(t, 5, c.TypeInt)
+	assert.Equal(t, float32(6.6), c.TypeFloat32)
+	assert.Equal(t, 8.8, c.TypeFloat64)
 }

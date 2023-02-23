@@ -147,6 +147,20 @@ func mergeFile(c ConfigI, profile string) {
 			} else {
 				err = e
 			}
+		case "float32":
+			rtn, e := strconv.ParseFloat(fileVal, 32)
+			if e == nil {
+				rV = reflect.ValueOf(float32(rtn))
+			} else {
+				err = e
+			}
+		case "float64":
+			rtn, e := strconv.ParseFloat(fileVal, 64)
+			if e == nil {
+				rV = reflect.ValueOf(float64(rtn))
+			} else {
+				err = e
+			}
 		case "Duration":
 			rtn, e := time.ParseDuration(fileVal)
 			if e == nil {

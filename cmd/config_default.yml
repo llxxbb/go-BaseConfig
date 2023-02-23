@@ -16,3 +16,8 @@ mysql:
     maxIdle: 2
     timeout: 500ms
     readTimeout: 3s
+
+type:
+  int: 5
+  float32: 6.6
+  float64: 8.8
