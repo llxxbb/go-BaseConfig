@@ -14,6 +14,7 @@ func TestConfig_default(t *testing.T) {
 	FillConfig(&c, &c)
 	assert.Equal(t, "back-normal", c.ProjectName)
 	assert.Equal(t, "v0.0.1", c.ProjectVersion)
+	assert.Equal(t, 123, c.ProjectId)
 	assert.Equal(t, "product", c.Env)
 	wd, _ := os.Getwd()
 	assert.Equal(t, wd, c.WorkPath)

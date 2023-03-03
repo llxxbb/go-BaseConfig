@@ -24,6 +24,7 @@ import (
 type BaseConfig struct {
 	ProjectName    string // 项目名称
 	ProjectVersion string // 项目本身的版本信息
+	ProjectId      int    // 项目编号
 	Env            string // 部署环境
 	Port           string // 对外服务的端口号
 	GinRelease     bool   // gin 是否以 release 模式工作
@@ -51,6 +52,7 @@ var FDefault []byte
 var fieldMap = map[string]string{
 	"prj.name":    "ProjectName",
 	"prj.version": "ProjectVersion",
+	"prj.id":      "ProjectId",
 	"port":        "Port",
 	"gin.release": "GinRelease",
 	"log.root":    "LogRoot",
@@ -194,8 +196,9 @@ func (c *BaseConfig) AppendFieldMap(fm map[string]string) {
 
 func (c *BaseConfig) Print() {
 	zap.L().Info("------------ project info ------------")
-	zap.L().Info("-- ", zap.String("ProjectName", c.ProjectName))
-	zap.L().Info("-- ", zap.String("ProjectVersion", c.ProjectVersion))
+	zap.L().Info("-- ", zap.String("project name", c.ProjectName))
+	zap.L().Info("-- ", zap.String("project version", c.ProjectVersion))
+	zap.L().Info("-- ", zap.Int("project id", c.ProjectId))
 	zap.L().Info("-- ", zap.Bool("GinRelease", c.GinRelease))
 	zap.L().Info("------------ endpoint info ------------")
 	zap.L().Info("-- ", zap.String("Env", c.Env))
