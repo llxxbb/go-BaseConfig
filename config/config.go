@@ -42,7 +42,7 @@ type ConfigI interface {
 }
 
 const (
-	KEY_ENV     = "env"
+	KEY_ENV     = "PRJ_ENV"
 	VAL_PRODUCT = "product"
 )
 
@@ -146,6 +146,69 @@ func mergeFile(c ConfigI, profile string) {
 			rtn, e := strconv.ParseInt(fileVal, 0, 64)
 			if e == nil {
 				rV = reflect.ValueOf(int(rtn))
+			} else {
+				err = e
+			}
+		case "int8":
+			rtn, e := strconv.ParseInt(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(int8(rtn))
+			} else {
+				err = e
+			}
+		case "int16":
+			rtn, e := strconv.ParseInt(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(int16(rtn))
+			} else {
+				err = e
+			}
+		case "int32":
+			rtn, e := strconv.ParseInt(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(int32(rtn))
+			} else {
+				err = e
+			}
+		case "int64":
+			rtn, e := strconv.ParseInt(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(rtn)
+			} else {
+				err = e
+			}
+		case "uint8":
+			rtn, e := strconv.ParseUint(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(uint8(rtn))
+			} else {
+				err = e
+			}
+		case "uint16":
+			rtn, e := strconv.ParseUint(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(uint16(rtn))
+			} else {
+				err = e
+			}
+		case "uint32":
+			rtn, e := strconv.ParseUint(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(uint32(rtn))
+			} else {
+				err = e
+			}
+		case "uint":
+			rtn, e := strconv.ParseUint(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(uint(rtn))
+			} else {
+				err = e
+			}
+		case "uint64":
+			rtn, e := strconv.ParseUint(fileVal, 0, 64)
+			if e == nil {
+				rV = reflect.ValueOf(rtn)
 			} else {
 				err = e
 			}

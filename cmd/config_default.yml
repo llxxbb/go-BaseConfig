@@ -19,6 +19,19 @@ mysql:
     readTimeout: 3s
 
 type:
-  int: 5
+  int: -5
   float32: 6.6
   float64: 8.8
+  int8: -8
+  int16: -16
+  int32: -32
+  int64: -64
+  uint: 5
+  uint8: 8
+  uint16: 16
+  uint32: 32
+  uint64: 64
+
+
+
+
