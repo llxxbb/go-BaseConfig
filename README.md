@@ -32,7 +32,7 @@ gin.release: true
 
 - **缺省配置文件**：放于 config_default.yml 文件中，嵌入的请设置 config.FDefault 变量
 
-- **env 环境变量**： env 的缺省值为 product，用于确定要加载的配置文件如，如果 env = dev 则加载 config_dev.yml
+- **PRJ_ENV 环境变量**： PRJ_ENV 的缺省值为 product，用于确定要加载的配置文件如，如果 PRJ_ENV = dev 则加载 config_dev.yml
 
 - **优先级**：环境变量>特定环境配置>缺省配置
 
